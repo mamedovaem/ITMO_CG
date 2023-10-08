@@ -7,12 +7,10 @@ class GameComponent;
 
 class D3DApp : public Win32App
 {
-
 public:
-
-	 ID3D11Device* device;
-	 ID3D11DeviceContext* context;
-	 IDXGISwapChain* swapChain;
+	ID3D11Device* device;
+	ID3D11DeviceContext* context;
+	IDXGISwapChain* swapChain;
 
 	ID3D11Texture2D* backTex;
 	ID3D11Texture2D* depthStencil;

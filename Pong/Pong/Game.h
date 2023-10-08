@@ -9,9 +9,9 @@ class Game: public D3DApp
 {
 public:
 //	Win32App win32App;
-	CircleComponent* ball;
-	RectComponent* paddle1;
-	RectComponent* paddle2;
+	CircleComponent* ball{ nullptr };
+	RectComponent* paddle1{ nullptr };
+	RectComponent* paddle2{ nullptr };
 	int score1 = 0;
 	int score2 = 0;
 

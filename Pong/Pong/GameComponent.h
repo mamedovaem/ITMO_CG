@@ -5,9 +5,7 @@
 
 struct ConstantBuffer
 {
-	DirectX::XMMATRIX mWorld;
-	DirectX::XMMATRIX mView;
-	DirectX::XMMATRIX mProjection;
+	DirectX::XMMATRIX mMVP;
 };
 
 class D3DApp;
@@ -15,7 +13,6 @@ class D3DApp;
 class GameComponent
 {
 public:
-
 	D3DApp* app;
 
 	std::vector<DirectX::XMFLOAT4> vertices;

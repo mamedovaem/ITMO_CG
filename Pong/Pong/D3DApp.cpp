@@ -38,7 +38,6 @@ HRESULT D3DApp::SetDeviceAndSwapChain()
 	swapDesc.SampleDesc.Count = 1;
 	swapDesc.SampleDesc.Quality = 0;
 
-
 	HRESULT res = D3D11CreateDeviceAndSwapChain(
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
@@ -67,20 +66,10 @@ HRESULT D3DApp::SetDeviceAndSwapChain()
 
 HRESULT D3DApp::SetDepthStencil()
 {
-	D3D11_TEXTURE2D_DESC descDepth{ };
-
-	descDepth.Width = ClientWidth;
-
-	descDepth.Height = ClientHeight;
-	descDepth.MipLevels = 1;
-	descDepth.ArraySize = 1;
-	descDepth.Format = DXGI_FORMAT_D24_UNORM_S8_UINT; 
-	descDepth.SampleDesc.Count = 1;
-	descDepth.SampleDesc.Quality = 0;
-	descDepth.Usage = D3D11_USAGE_DEFAULT;
+	D3D11_TEXTURE2D_DESC descDepth{};
+	backTex->GetDesc(&descDepth);
+	descDepth.Format = DXGI_FORMAT_D32_FLOAT_S8X24_UINT;
 	descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-	descDepth.CPUAccessFlags = 0;
-	descDepth.MiscFlags = 0;
 
 	HRESULT res = S_OK;
 
@@ -102,38 +91,36 @@ HRESULT D3DApp::SetDepthStencil()
 
 bool D3DApp::DestroyResources()
 {
+	if (isResourcesAlloced) {
+		// for (auto c : components) {
+		//     if(c) {
+		//         c->DestroyResources();
+		//     }
+		// }
+		//components.clear();
 
-	if (isResourcesAlloced)
-	{
-		
-			for (auto c : components)
-			{
-				if(c)
-					c->DestroyResources();
-			}
-			components.clear();
-
-
-	if (context)
+		if (context) {
 			context->ClearState();
+		}
 	
-	if (rastState)
-		rastState->Release();
+		if (rastState) {
+			rastState->Release();
+		}
 
-	 if (backTex)
-		 backTex->Release();
+		 if (backTex)
+			 backTex->Release();
 	 
-	 if (rtv)
-		 rtv->Release();
+		 if (rtv)
+			 rtv->Release();
 
-	 if (swapChain) 
-		swapChain->Release();
+		 if (swapChain)
+			swapChain->Release();
 
-	 if (context) 
-		context->Release();
+		 if (context)
+			context->Release();
 
-	 if (device) 
-		device->Release();
+		 if (device)
+			device->Release();
 	}
 
 	isResourcesAlloced = false;
@@ -143,19 +130,22 @@ bool D3DApp::DestroyResources()
 
 bool D3DApp::Render()
 {
-	float ClearColor[4] = { 0.0f, 0.0f, 1.0f, 1.0f };
+	context->ClearState();
 
-	 context->OMSetRenderTargets(1, &rtv, depthStencilView);
-	 context->ClearRenderTargetView(rtv, ClearColor);
-	
+	float ClearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
 
-	 for (auto c : components)
-	 {
-		 c->Draw();
-	 }
-	 context->OMSetRenderTargets(0, nullptr, depthStencilView);
+	context->OMSetRenderTargets(1, &rtv, nullptr); // depthStencilView
+	context->ClearRenderTargetView(rtv, ClearColor);
+	context->RSSetState(rastState);
+	SetViewport();
+
+	for (auto c : components)
+	{
+		c->Draw();
+	}
+	context->OMSetRenderTargets(0, nullptr, nullptr);
 	// Вывести в передний буфер (на экран) информацию, нарисованную в заднем буфере.
-	 swapChain->Present(1, 0);
+	swapChain->Present(1, 0);
 
 	return true;
 }

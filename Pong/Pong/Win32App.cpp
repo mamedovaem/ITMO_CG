@@ -5,16 +5,28 @@ Win32App::Win32App()
 	Initialize();
 }
 
+extern bool isExitRequested;
+
 LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
 {
 	switch (umessage)
 	{
+	case WM_DESTROY:
+	{
+		isExitRequested = true;
+		PostQuitMessage(0);
+		return 0;
+	}
 	case WM_KEYDOWN:
 	{
 		// If a key is pressed send it to the input object so it can record that state.
 		std::cout << "Key: " << static_cast<unsigned int>(wparam) << std::endl;
 
-		if (static_cast<unsigned int>(wparam) == 27) PostQuitMessage(0);
+		// escape
+		if (static_cast<unsigned int>(wparam) == 27) {
+			isExitRequested = true;
+			PostQuitMessage(0);
+		}
 		return 0;
 	}
 	default:
@@ -31,8 +43,6 @@ bool Win32App::Initialize()
 
 	ClientWidth = 800;
 	ClientHeight = 800;
-	
-#pragma region Window init
 
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 	wc.lpfnWndProc = WndProc;
@@ -49,7 +59,6 @@ bool Win32App::Initialize()
 
 	// Register the window class.
 	RegisterClassEx(&wc);
-
 
 	ClientWidth = 800;
 	ClientHeight = 800;

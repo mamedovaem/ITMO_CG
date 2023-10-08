@@ -1,6 +1,7 @@
+#include <Windows.h>
 #include "Game.h"
 
-int main()
+int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	Game game;
 	game.Initialize();
@@ -8,6 +9,5 @@ int main()
 	
 	game.DestroyResources();
 
-
-		return 0;
+	return 0;
 }

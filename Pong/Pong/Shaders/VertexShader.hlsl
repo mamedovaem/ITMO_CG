@@ -12,18 +12,16 @@ struct PS_IN
 
 cbuffer ConstantBuffer : register(b0)
 {
-    matrix MatWorld;
-    matrix MatView;
-    matrix MatProjection;
+    float4x4 MVP;
 };
 
 PS_IN VSMain(VS_IN input)
 {
     PS_IN output = (PS_IN) 0;
-	
-    output.pos = mul(input.pos, MatProjection);
+
+    output.pos = mul(MVP, input.pos);
     output.col = input.col;
-	
+
     return output;
 }
 

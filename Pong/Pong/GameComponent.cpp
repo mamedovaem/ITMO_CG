@@ -35,9 +35,9 @@ HRESULT GameComponent::SetBuffers()
 	res = app->device->CreateBuffer(&indexBufDesc, &indexData, &indexBuffer);
 
 	D3D11_BUFFER_DESC constantBufDesc = {};
-	constantBufDesc.Usage = D3D11_USAGE_DEFAULT;
+	constantBufDesc.Usage = D3D11_USAGE_DYNAMIC;
 	constantBufDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	constantBufDesc.CPUAccessFlags = 0;
+	constantBufDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	constantBufDesc.MiscFlags = 0;
 	constantBufDesc.StructureByteStride = 0;
 	constantBufDesc.ByteWidth = sizeof(ConstantBuffer);
@@ -48,10 +48,9 @@ HRESULT GameComponent::SetBuffers()
 	constBufData.pSysMem = &matrixes;
 	constBufData.SysMemPitch = 0;
 	constBufData.SysMemSlicePitch = 0;
-	
 
 	res = app->device->CreateBuffer(&constantBufDesc,&constBufData, &constantBuffer);
-	 app->context->VSSetConstantBuffers(0, 1, &constantBuffer);
+	app->context->VSSetConstantBuffers(0, 1, &constantBuffer);
 
 	return res;
 }
@@ -60,8 +59,8 @@ HRESULT GameComponent::SetShaders()
 {
 	HRESULT res = S_OK;
 
-	res = CompileShaderFromFile(L"C:/Users/User/Desktop/New_CG/Framework/Framework/Shaders/VertexShader.hlsl", "VSMain", "vs_5_0", &vertexShaderByteCode);
-	res = CompileShaderFromFile(L"C:/Users/User/Desktop/New_CG/Framework/Framework/Shaders/VertexShader.hlsl", "PSMain", "ps_5_0", &pixelShaderByteCode);
+	res = CompileShaderFromFile(L"Shaders/VertexShader.hlsl", "VSMain", "vs_5_0", &vertexShaderByteCode);
+	res = CompileShaderFromFile(L"Shaders/VertexShader.hlsl", "PSMain", "ps_5_0", &pixelShaderByteCode);
 
 	res = app->device->CreateVertexShader(
 		vertexShaderByteCode->GetBufferPointer(),
@@ -114,31 +113,31 @@ HRESULT GameComponent::SetInputLayout()
 
 void GameComponent::SetMatrixes()
 {
-	matrixes.mWorld = DirectX::XMMatrixIdentity();
-	matrixes.mView = DirectX::XMMatrixIdentity();
-	matrixes.mProjection = DirectX::XMMatrixIdentity();
+	matrixes.mMVP = DirectX::XMMatrixIdentity();
 //	app->context->VSSetConstantBuffers(0, 1, &constantBuffer);
 //	app->context->UpdateSubresource(constantBuffer, 0, NULL, &matrixes, 0, 0);
-	DirectX::XMVECTOR Eye = DirectX::XMVectorSet(0.0f, 1.0f, -5.0f, 0.0f);  // Откуда смотрим
+	//DirectX::XMVECTOR Eye = DirectX::XMVectorSet(0.0f, 1.0f, -5.0f, 0.0f);  // Откуда смотрим
 
-	DirectX::XMVECTOR At = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);    // Куда смотрим
+	//DirectX::XMVECTOR At = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);    // Куда смотрим
 
-	DirectX::XMVECTOR Up = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);    // Направление верха
+	//DirectX::XMVECTOR Up = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);    // Направление верха
 
-	matrixes.mView = DirectX::XMMatrixLookAtLH(Eye, At, Up);
+	//matrixes.mView = DirectX::XMMatrixLookAtLH(Eye, At, Up);
 
 
 
 	// Инициализация матрицы проекции
 
-	matrixes.mProjection = DirectX::XMMatrixPerspectiveFovLH(DirectX::XM_PIDIV4, app->ClientWidth / (FLOAT)app->ClientHeight, 0.01f, 100.0f);
+	// matrixes.mProjection = DirectX::XMMatrixPerspectiveFovLH(DirectX::XM_PIDIV4, app->ClientWidth / (FLOAT)app->ClientHeight, 0.01f, 100.0f);
 }
 
 
 void GameComponent::UpdateMatrixes()
 {
-
-	app->context->UpdateSubresource(constantBuffer, 0, NULL, &matrixes, 0, 0);
+	D3D11_MAPPED_SUBRESOURCE mss;
+	app->context->Map(constantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mss);
+	memcpy(mss.pData, &matrixes, sizeof(matrixes));
+	app->context->Unmap(constantBuffer, 0);
 }
 
 HRESULT GameComponent::CompileShaderFromFile(LPCWSTR fileName, LPCSTR entryPoint, LPCSTR shaderModel, ID3DBlob** blobOut)

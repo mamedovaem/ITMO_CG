@@ -8,6 +8,8 @@ public:
 	//D3DApp* app;
 
 	DirectX::XMFLOAT4 center;
+	float length;
+	float width; 
 
 	bool isResourcesAlloced = false;
 
@@ -23,6 +25,8 @@ public:
 		this->app = app;
 		this->color = color;
 		this->center = center;
+		this->length = length;
+		this->width = width;
 
 		float x0 = center.x - length / 2;
 		float x1 = center.x + length / 2;

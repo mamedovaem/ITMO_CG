@@ -139,6 +139,7 @@
     <ClInclude Include="Keys.h" />
     <ClInclude Include="RectComponent.h" />
     <ClInclude Include="Libs.h" />
+    <ClInclude Include="Run.h" />
     <ClInclude Include="SimpleMath.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TriangleComponent.h" />

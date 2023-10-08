@@ -132,7 +132,7 @@ bool D3DApp::Render()
 {
 	context->ClearState();
 
-	float ClearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	float ClearColor[4] = { 0.0f, 0.0f, 1.0f, 1.0f };
 
 	context->OMSetRenderTargets(1, &rtv, nullptr); // depthStencilView
 	context->ClearRenderTargetView(rtv, ClearColor);

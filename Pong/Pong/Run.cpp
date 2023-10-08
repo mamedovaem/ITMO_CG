@@ -1,9 +1,10 @@
-#include <Windows.h>
-#include "Game.h"
+#pragma once
+#include "Run.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-	Game game;
+	
+
 	game.Initialize();
 	game.Run();
 	

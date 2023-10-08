@@ -1,5 +1,4 @@
 #pragma once
-
 #include "GameComponent.h"
 
 class TriangleComponent: public GameComponent

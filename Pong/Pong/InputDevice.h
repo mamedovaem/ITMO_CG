@@ -3,15 +3,15 @@
 #include "Keys.h"
 #include "Delegates.h"
 #include "Libs.h"
-#include "Game.h"
+#include "Win32App.h"
 
-class Game;
+class Win32App;
 
 class InputDevice
 {
-	friend class Game;
+	friend class Win32App;
 	
-	Game* game;
+	Win32App* app;
 
 	std::unordered_set<Keys>* keys;
 
@@ -32,7 +32,7 @@ public:
 	
 public:
 	
-	InputDevice(Game* inGame);
+	InputDevice(Win32App* app);
 	~InputDevice();
 
 
@@ -40,7 +40,7 @@ public:
 	void RemovePressedKey(Keys key);
 	bool IsKeyDown(Keys key);
 
-protected:
+//protected:
 	struct KeyboardInputEventArgs {
 		/*
 		 * The "make" scan code (key depression).

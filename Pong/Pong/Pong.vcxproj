@@ -18,17 +18,11 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="MySuper3DApp.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Shaders\MyVeryFirstShader.hlsl" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{6e66644d-3ea7-4d38-8775-c09d2b28f196}</ProjectGuid>
-    <RootNamespace>ITMOCG</RootNamespace>
+    <ProjectGuid>{7ee81350-0c4a-46db-9b24-2eff4d251063}</ProjectGuid>
+    <RootNamespace>Pong</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -115,12 +109,6 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <FxCompile>
-      <EntryPointName>VSMain</EntryPointName>
-    </FxCompile>
-    <FxCompile>
-      <ShaderModel>5.0</ShaderModel>
-    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -138,6 +126,44 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Ball.h" />
+    <ClInclude Include="CircleComponent.h" />
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="D3DApp.h" />
+    <ClInclude Include="Delegates.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameComponent.h" />
+    <ClInclude Include="Paddle.h" />
+    <ClInclude Include="InputDevice.h" />
+    <ClInclude Include="Keys.h" />
+    <ClInclude Include="RectComponent.h" />
+    <ClInclude Include="Libs.h" />
+    <ClInclude Include="SimpleMath.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="TriangleComponent.h" />
+    <ClInclude Include="Win32App.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="CircleComponent.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="D3DApp.cpp" />
+    <ClCompile Include="Delegates.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameComponent.cpp" />
+    <ClCompile Include="InputDevice.cpp" />
+    <ClCompile Include="Paddle.cpp" />
+    <ClCompile Include="RectComponent.cpp" />
+    <ClCompile Include="Run.cpp" />
+    <ClCompile Include="SimpleMath.cpp" />
+    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="TriangleComponent.cpp" />
+    <ClCompile Include="Win32App.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="Delegates.natvis" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

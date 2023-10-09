@@ -8,6 +8,8 @@ public:
 	//D3DApp* app;
 
 	DirectX::XMFLOAT2 pos;
+	DirectX::XMFLOAT4 color;
+
 	float length;
 	float width; 
 
@@ -19,6 +21,7 @@ public:
 	{
 		this->app = app;
 		this->color = color;
+		cbColor = ConstantBufferColor{ color };
 		this->pos = pos;
 		this->length = length;
 		this->width = width;

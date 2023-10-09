@@ -141,6 +141,17 @@ void Game::DoCollision(Paddle* paddle)
 	ball->velocityX *= velocity / new_velocity * ball->multiplier;
 	ball->velocityY *= velocity / new_velocity * ball->multiplier;
 
+	DirectX::XMFLOAT4 tempColor = ball->color;
+	ball->color = paddle->color;
+	paddle->color = tempColor;
+
+	ball->cbColor = ConstantBufferColor{ ball->color };
+	ball->UpdateColor();
+
+	paddle->cbColor = ConstantBufferColor{ paddle->color };
+	paddle->UpdateColor();
+
+
 	return;
 }
 

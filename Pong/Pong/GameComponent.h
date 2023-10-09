@@ -8,6 +8,11 @@ struct ConstantBuffer
 	DirectX::XMMATRIX mMVP;
 };
 
+struct ConstantBufferColor
+{
+	DirectX::XMFLOAT4 Color;
+};
+
 class D3DApp;
 
 class GameComponent
@@ -18,13 +23,12 @@ public:
 	std::vector<DirectX::XMFLOAT4> vertices;
 	std::vector<int> indices;
 	ConstantBuffer matrixes;
-
-
-	DirectX::XMFLOAT4 color;
+	ConstantBufferColor cbColor;
 
 	ID3D11Buffer* vertexBuffer;
 	ID3D11Buffer* indexBuffer;
 	ID3D11Buffer* constantBuffer;
+	ID3D11Buffer* constantBufferColor;
 
 	ID3D11InputLayout* layout;
 	ID3D11PixelShader* pixelShader;
@@ -46,6 +50,7 @@ public:
 	HRESULT SetInputLayout();
 	void SetMatrixes();
 	void UpdateMatrixes();
+	void UpdateColor();
 
 	HRESULT CompileShaderFromFile(LPCWSTR fileName, LPCSTR entryPoint, LPCSTR shaderModel, ID3DBlob** blobOut);
 };

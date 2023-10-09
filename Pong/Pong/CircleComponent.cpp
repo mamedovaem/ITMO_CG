@@ -53,6 +53,7 @@ void CircleComponent::Draw()
 	app->context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	app->context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
 	app->context->VSSetConstantBuffers(0, 1, &constantBuffer);
+	app->context->PSSetConstantBuffers(1, 1, &constantBufferColor);
 	//app->context->PSSetConstantBuffers(0, 1, &constantBuffer);
 	app->context->VSSetShader(vertexShader, NULL, 0);
 	app->context->PSSetShader(pixelShader, NULL, 0);

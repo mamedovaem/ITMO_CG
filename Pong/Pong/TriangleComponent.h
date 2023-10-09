@@ -6,6 +6,7 @@ class TriangleComponent: public GameComponent
 public:
 	//D3DApp* app;
 	bool isResourcesAlloced = false;
+	DirectX::XMFLOAT4 color;
 
 	TriangleComponent()
 	{
@@ -19,7 +20,8 @@ public:
 	{
 		this->app = app;
 		this->color = color;
-		
+		cbColor = ConstantBufferColor{ color };
+
 		vertices.push_back(first);
 		vertices.push_back(color);
 		vertices.push_back(second);

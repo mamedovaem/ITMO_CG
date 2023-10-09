@@ -52,6 +52,24 @@ HRESULT GameComponent::SetBuffers()
 	res = app->device->CreateBuffer(&constantBufDesc,&constBufData, &constantBuffer);
 	app->context->VSSetConstantBuffers(0, 1, &constantBuffer);
 
+	D3D11_BUFFER_DESC constantBufColorDesc = {};
+	constantBufColorDesc.Usage = D3D11_USAGE_DYNAMIC;
+	constantBufColorDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	constantBufColorDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	constantBufColorDesc.MiscFlags = 0;
+	constantBufColorDesc.StructureByteStride = 0;
+	constantBufColorDesc.ByteWidth = sizeof(ConstantBufferColor);
+
+	//	std::cout << sizeof(ConstantBuffer);
+
+	D3D11_SUBRESOURCE_DATA constBufColorData = {};
+	constBufColorData.pSysMem = &cbColor;
+	constBufColorData.SysMemPitch = 0;
+	constBufColorData.SysMemSlicePitch = 0;
+
+	res = app->device->CreateBuffer(&constantBufColorDesc, &constBufColorData, &constantBufferColor);
+	app->context->VSSetConstantBuffers(1, 1, &constantBufferColor);
+
 	return res;
 }
 
@@ -131,13 +149,20 @@ void GameComponent::SetMatrixes()
 	// matrixes.mProjection = DirectX::XMMatrixPerspectiveFovLH(DirectX::XM_PIDIV4, app->ClientWidth / (FLOAT)app->ClientHeight, 0.01f, 100.0f);
 }
 
-
 void GameComponent::UpdateMatrixes()
 {
 	D3D11_MAPPED_SUBRESOURCE mss;
 	app->context->Map(constantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mss);
 	memcpy(mss.pData, &matrixes, sizeof(matrixes));
 	app->context->Unmap(constantBuffer, 0);
+}
+
+void GameComponent::UpdateColor()
+{
+	D3D11_MAPPED_SUBRESOURCE mssc;
+	app->context->Map(constantBufferColor, 0, D3D11_MAP_WRITE_DISCARD, 0, &mssc);
+	memcpy(mssc.pData, &cbColor, sizeof(cbColor));
+	app->context->Unmap(constantBufferColor, 0);
 }
 
 HRESULT GameComponent::CompileShaderFromFile(LPCWSTR fileName, LPCSTR entryPoint, LPCSTR shaderModel, ID3DBlob** blobOut)

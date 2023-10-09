@@ -6,6 +6,7 @@ class CircleComponent: public GameComponent
 public:
 	//D3DApp* app;
 	DirectX::XMFLOAT2 pos;
+	DirectX::XMFLOAT4 color;
 
 	float radius;
 	int sideNum = 36;
@@ -19,6 +20,7 @@ public:
 		this->pos = pos;
 		this->radius = radius;
 		this->color = color;
+		cbColor = ConstantBufferColor{ color };
 
 		GenerateGeometry();
 		AllocResources();

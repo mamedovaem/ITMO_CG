@@ -6,23 +6,24 @@ class InputDevice;
 
 class Win32App
 {
-
 public:
-LPCWSTR applicationName;
-HINSTANCE hInstance;
-HWND hWnd;
-WNDCLASSEX wc;
+	LPCWSTR applicationName;
+	HINSTANCE hInstance;
+	HWND hWnd;
+	WNDCLASSEX wc;
 
-InputDevice* input;
+	InputDevice* input = nullptr;
 
-int ClientWidth;
-int ClientHeight;
+	int ClientWidth;
+	int ClientHeight;
 	bool isInitialized = false;
 
 	Win32App();
 	bool Initialize();
 	~Win32App()
 	{
-		delete input;
+		if (input != nullptr) {
+			delete input;
+		}
 	}
 };

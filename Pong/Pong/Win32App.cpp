@@ -134,7 +134,7 @@ bool Win32App::Initialize()
 
 	ShowCursor(true);
 
-	input = new InputDevice(this);
+	input = new InputDevice(hWnd);
 
 	return true;
 }

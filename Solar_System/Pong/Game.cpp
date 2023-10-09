@@ -13,7 +13,7 @@ bool Game::Initialize()
 	Sun = new SphereComponent(this, 0.3f, { 1.0f, 1.0f, 0, 1.0f });
 	components.push_back(Sun);
 
-	 prevTime = GetTickCount64();
+	prevTime = GetTickCount64();
 
 	isResourcesAlloced = true;
 	return true;
@@ -37,7 +37,7 @@ void Game::Run()
 			isExitRequested = true;
 		}
 
-		 curTime = GetTickCount64();
+		curTime = GetTickCount64();
 		
 		deltaTime += (curTime - prevTime) * 1e-3f;
 

@@ -10,7 +10,7 @@ HRESULT GameComponent::SetBuffers()
 	vertexBufDesc.CPUAccessFlags = 0;
 	vertexBufDesc.MiscFlags = 0;
 	vertexBufDesc.StructureByteStride = 0;
-	vertexBufDesc.ByteWidth = sizeof(DirectX::XMFLOAT4) * vertices.size();
+	vertexBufDesc.ByteWidth = sizeof(DirectX::XMFLOAT4) * UINT(vertices.size());
 
 	D3D11_SUBRESOURCE_DATA vertexData = {};
 	vertexData.pSysMem = vertices.data();
@@ -25,7 +25,7 @@ HRESULT GameComponent::SetBuffers()
 	indexBufDesc.CPUAccessFlags = 0;
 	indexBufDesc.MiscFlags = 0;
 	indexBufDesc.StructureByteStride = 0;
-	indexBufDesc.ByteWidth = sizeof(int) * indices.size();
+	indexBufDesc.ByteWidth = sizeof(int) * UINT(indices.size());
 
 	D3D11_SUBRESOURCE_DATA indexData = {};
 	indexData.pSysMem = indices.data();
@@ -59,8 +59,8 @@ HRESULT GameComponent::SetShaders()
 {
 	HRESULT res = S_OK;
 
-	res = CompileShaderFromFile(L"C:/Users/User/Desktop/New_CG/Solar_System/Pong/Shaders/VertexShader.hlsl", "VSMain", "vs_5_0", &vertexShaderByteCode);
-	res = CompileShaderFromFile(L"C:/Users/User/Desktop/New_CG/Solar_System/Pong/Shaders/VertexShader.hlsl", "PSMain", "ps_5_0", &pixelShaderByteCode);
+	res = CompileShaderFromFile(L"Shaders/VertexShader.hlsl", "VSMain", "vs_5_0", &vertexShaderByteCode);
+	res = CompileShaderFromFile(L"Shaders/VertexShader.hlsl", "PSMain", "ps_5_0", &pixelShaderByteCode);
 
 	res = app->device->CreateVertexShader(
 		vertexShaderByteCode->GetBufferPointer(),
@@ -77,7 +77,6 @@ HRESULT GameComponent::SetShaders()
 
 HRESULT GameComponent::SetInputLayout()
 {
-
 	HRESULT res = S_OK;
 
 	D3D11_INPUT_ELEMENT_DESC inputElements[] = {
@@ -117,14 +116,13 @@ void GameComponent::SetMatrixes()
 
 	app->context->VSSetConstantBuffers(0, 1, &constantBuffer);
 	//UpdateMatrixes();
-	DirectX::XMVECTOR Eye = DirectX::XMVectorSet(0.0f, 1.0f, -5.0f, 0.0f);  // Where are we looking from
+	DirectX::XMVECTOR Eye = DirectX::XMVectorSet(0.0f, 0.0f, -5.0f, 0.0f);  // Where are we looking from
 
 	DirectX::XMVECTOR At = DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);    // Where are we looking at
 
 	DirectX::XMVECTOR Up = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);    // Up direction
 
-	matrixes.mView = DirectX::XMMatrixLookAtLH(Eye, At, Up);
-	matrixes.mProjection = DirectX::XMMatrixPerspectiveFovLH(DirectX::XM_PIDIV4, app->ClientWidth / (FLOAT)app->ClientHeight, 0.01f, 100.0f);
+	matrixes.mViewProj = DirectX::XMMatrixLookAtLH(Eye, At, Up) * DirectX::XMMatrixPerspectiveFovLH(DirectX::XM_PIDIV4, app->ClientWidth / (FLOAT)app->ClientHeight, 0.01f, 100.0f);
 }
 
 

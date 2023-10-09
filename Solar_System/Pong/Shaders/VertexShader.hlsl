@@ -13,17 +13,15 @@ struct PS_IN
 cbuffer ConstantBuffer : register(b0)
 {
     float4x4 World;
-    float4x4 View;
-    float4x4 Projection;
+    float4x4 ViewProj;
 };
 
 PS_IN VSMain(VS_IN input)
 {
     PS_IN output = (PS_IN) 0;
 
-    output.pos = mul(input.pos, World);
-    output.pos = mul(output.pos, View);
-    output.pos = mul(output.pos, Projection);
+    output.pos = mul(input.pos, ViewProj);
+    output.pos = mul(output.pos, World);
     
     output.col = input.col;
 

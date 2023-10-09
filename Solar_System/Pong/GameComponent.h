@@ -6,8 +6,7 @@
 struct ConstantBuffer
 {
 	DirectX::XMMATRIX mWorld;
-	DirectX::XMMATRIX mView;
-	DirectX::XMMATRIX mProjection;
+	DirectX::XMMATRIX mViewProj;
 };
 
 class D3DApp;
@@ -21,7 +20,6 @@ public:
 	std::vector<int> indices;
 	ConstantBuffer matrixes;
 
-
 	DirectX::XMFLOAT4 color;
 
 	ID3D11Buffer* vertexBuffer;
@@ -34,9 +32,6 @@ public:
 	
 	ID3D11VertexShader* vertexShader;
 	ID3DBlob* vertexShaderByteCode;
-
-
-	GameComponent() {}
 
 	virtual HRESULT AllocResources() = 0;
 	virtual void Draw() = 0;

@@ -56,7 +56,7 @@ void CircleComponent::Draw()
 	app->context->VSSetShader(vertexShader, NULL, 0);
 	app->context->PSSetShader(pixelShader, NULL, 0);
 
-	app->context->DrawIndexed(indices.size(), 0, 0);
+	app->context->DrawIndexed(UINT(indices.size()), 0, 0);
 
 }
 

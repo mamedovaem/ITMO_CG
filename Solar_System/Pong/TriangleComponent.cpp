@@ -17,6 +17,7 @@ void TriangleComponent::Draw()
 	UINT stride = sizeof(DirectX::XMFLOAT4) * 2;
 	UINT offset = 0;
 
+	app->context->IASetInputLayout(layout);
 	app->context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	app->context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	app->context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);

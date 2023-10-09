@@ -30,10 +30,12 @@ public:
 	Game();
 	~Game();
 	bool Initialize();
+	void SetScene();
 	void Run();
 	void ProcessInput();
 	bool CheckCollision(Paddle* paddle);
 	void DoCollision(Paddle* paddle);
+	ULONGLONG CheckOutOfBoundaries();
 	void DestroyResources();
 
 };

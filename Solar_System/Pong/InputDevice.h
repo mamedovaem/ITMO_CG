@@ -3,15 +3,10 @@
 #include "Keys.h"
 #include "Delegates.h"
 #include "Libs.h"
-#include "Win32App.h"
-
-class Win32App;
 
 class InputDevice
 {
-	friend class Win32App;
-	
-	Win32App* app;
+	HWND hWnd;
 
 	std::unordered_set<Keys>* keys;
 
@@ -32,9 +27,8 @@ public:
 	
 public:
 	
-	InputDevice(Win32App* app);
+	InputDevice(HWND hWnd);
 	~InputDevice();
-
 
 	void AddPressedKey(Keys key);
 	void RemovePressedKey(Keys key);

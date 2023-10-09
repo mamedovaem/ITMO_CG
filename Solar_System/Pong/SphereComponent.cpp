@@ -12,10 +12,11 @@ void SphereComponent::CreateSphere(float radius, int sliceCount, int stackCount)
 	// Poles: note that there will be texture coordinate distortion as there is
 	// not a unique point on the texture map to assign to the pole when mapping
 	// a rectangular texture onto a sphere.
-	DirectX::XMFLOAT4 topVertex(0.0f, +radius, 0.0f, 1.0f);
+	DirectX::XMFLOAT4 topVertex(0.0f, radius, 0.0f, 1.0f);
 	DirectX::XMFLOAT4 bottomVertex(0.0f, -radius, 0.0f,1.0f);
 
 	vertices.push_back(topVertex);
+	vertices.push_back(color);
 
 	float phiStep = DirectX::XM_PI / stackCount;
 	float thetaStep = 2.0f * DirectX::XM_PI / sliceCount;
@@ -45,6 +46,7 @@ void SphereComponent::CreateSphere(float radius, int sliceCount, int stackCount)
 	}
 
 	vertices.push_back(bottomVertex);
+	vertices.push_back(color);
 
 	//
 	// Compute indices for top stack.  The top stack was written first to the vertex buffer
@@ -86,7 +88,7 @@ void SphereComponent::CreateSphere(float radius, int sliceCount, int stackCount)
 	//
 
 	// South pole vertex was added last.
-	int southPoleIndex = (int)vertices.size() - 1;
+	int southPoleIndex = (int)vertices.size()-1;
 
 	// Offset the indices to the index of the first vertex in the last ring.
 	baseIndex = southPoleIndex - ringVertexCount;
@@ -101,7 +103,6 @@ void SphereComponent::CreateSphere(float radius, int sliceCount, int stackCount)
 
 HRESULT SphereComponent::AllocResources()
 {
-	
 	SetBuffers();
 	SetShaders();
 	SetMatrixes();
@@ -119,6 +120,7 @@ void SphereComponent::Draw()
 	UINT stride = sizeof(DirectX::XMFLOAT4) * 2;
 	UINT offset = 0;
 
+	app->context->IASetInputLayout(layout);
 	app->context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	app->context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	app->context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
@@ -127,7 +129,7 @@ void SphereComponent::Draw()
 	app->context->VSSetShader(vertexShader, NULL, 0);
 	app->context->PSSetShader(pixelShader, NULL, 0);
 
-	app->context->DrawIndexed(indices.size(), 0, 0);
+	app->context->DrawIndexed(UINT(indices.size()), 0, 0);
 
 }
 

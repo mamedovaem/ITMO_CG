@@ -11,7 +11,6 @@ public:
 
 	bool isResourcesAlloced = false;
 	
-	SphereComponent() {}
 	SphereComponent(D3DApp* app, float radius, DirectX::XMFLOAT4 color)
 	{ 
 		this->app = app;
@@ -27,5 +26,4 @@ public:
 	HRESULT AllocResources() override;
 	HRESULT DestroyResources() override;
 	void Draw() override;
-
 };

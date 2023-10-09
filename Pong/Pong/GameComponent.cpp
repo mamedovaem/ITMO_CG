@@ -10,7 +10,7 @@ HRESULT GameComponent::SetBuffers()
 	vertexBufDesc.CPUAccessFlags = 0;
 	vertexBufDesc.MiscFlags = 0;
 	vertexBufDesc.StructureByteStride = 0;
-	vertexBufDesc.ByteWidth = sizeof(DirectX::XMFLOAT4) * vertices.size();
+	vertexBufDesc.ByteWidth = sizeof(DirectX::XMFLOAT4) * UINT(vertices.size());
 
 	D3D11_SUBRESOURCE_DATA vertexData = {};
 	vertexData.pSysMem = vertices.data();
@@ -25,7 +25,7 @@ HRESULT GameComponent::SetBuffers()
 	indexBufDesc.CPUAccessFlags = 0;
 	indexBufDesc.MiscFlags = 0;
 	indexBufDesc.StructureByteStride = 0;
-	indexBufDesc.ByteWidth = sizeof(int) * indices.size();
+	indexBufDesc.ByteWidth = sizeof(int) * UINT(indices.size());
 
 	D3D11_SUBRESOURCE_DATA indexData = {};
 	indexData.pSysMem = indices.data();

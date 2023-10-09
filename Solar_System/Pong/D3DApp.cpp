@@ -144,6 +144,12 @@ bool D3DApp::DestroyResources()
 
 bool D3DApp::Render()
 {
+	for (auto c : components)
+	{
+		c->SetMatrixes();
+		c->UpdateMatrixes();
+	}
+
 	context->ClearState();
 
 	float ClearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };

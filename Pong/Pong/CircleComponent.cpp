@@ -2,9 +2,9 @@
 
 void CircleComponent::GenerateGeometry()
 {
-
 	float dTheta = 2.0f * 3.14f / sideNum;
 	int centerIndex = 0;
+	DirectX::XMFLOAT4 center = { pos.x, pos.y, 0.f, 1.f };
 	vertices.push_back(center);
 	vertices.push_back(color);
 
@@ -19,7 +19,7 @@ void CircleComponent::GenerateGeometry()
 		vertices.push_back(color);
 	}
 
-	for (UINT i = 1; i < sideNum; ++i)
+	for (int i = 1; i < sideNum; ++i)
 	{
 		indices.push_back(centerIndex);
 		indices.push_back(i);
@@ -48,6 +48,7 @@ void CircleComponent::Draw()
 	UINT stride = sizeof(DirectX::XMFLOAT4) * 2;
 	UINT offset = 0;
 
+	app->context->IASetInputLayout(layout);
 	app->context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	app->context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	app->context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
@@ -56,7 +57,7 @@ void CircleComponent::Draw()
 	app->context->VSSetShader(vertexShader, NULL, 0);
 	app->context->PSSetShader(pixelShader, NULL, 0);
 
-	app->context->DrawIndexed(indices.size(), 0, 0);
+	app->context->DrawIndexed(UINT(indices.size()), 0, 0);
 
 }
 

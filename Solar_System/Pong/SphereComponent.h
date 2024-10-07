@@ -1,10 +1,10 @@
 //Written by Frank D. Luna
 
 #pragma once
-#include "GameComponent.h"
+#include "RenderComponent.h"
 
 
-class SphereComponent : public GameComponent
+class SphereComponent : public RenderComponent
 {
 public:
 	float radius;

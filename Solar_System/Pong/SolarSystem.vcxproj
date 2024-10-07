@@ -128,39 +128,38 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="CircleComponent.h" />
+    <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="D3DApp.h" />
     <ClInclude Include="Delegates.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameComponent.h" />
+    <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="GridComponent.h" />
     <ClInclude Include="InputDevice.h" />
     <ClInclude Include="Keys.h" />
-    <ClInclude Include="RectComponent.h" />
+    <ClInclude Include="PlanetComponent.h" />
     <ClInclude Include="Libs.h" />
     <ClInclude Include="Run.h" />
+    <ClInclude Include="SceneComponent.h" />
     <ClInclude Include="SimpleMath.h" />
     <ClInclude Include="SphereComponent.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="TriangleComponent.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="Win32App.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CircleComponent.cpp" />
+    <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="D3DApp.cpp" />
     <ClCompile Include="Delegates.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameComponent.cpp" />
+    <ClCompile Include="PlanetComponent.cpp" />
+    <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="GridComponent.cpp" />
     <ClCompile Include="InputDevice.cpp" />
-    <ClCompile Include="RectComponent.cpp" />
     <ClCompile Include="Run.cpp" />
     <ClCompile Include="SimpleMath.cpp" />
     <ClCompile Include="SphereComponent.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="TriangleComponent.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Win32App.cpp" />
   </ItemGroup>
   <ItemGroup>

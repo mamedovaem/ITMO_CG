@@ -17,6 +17,7 @@ void SphereComponent::CreateSphere(float radius, int sliceCount, int stackCount)
 
 	vertices.push_back(topVertex);
 	vertices.push_back(color);
+	vertices.push_back(DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 0.0f));
 
 	float phiStep = DirectX::XM_PI / stackCount;
 	float thetaStep = 2.0f * DirectX::XM_PI / sliceCount;
@@ -31,22 +32,24 @@ void SphereComponent::CreateSphere(float radius, int sliceCount, int stackCount)
 		{
 			float theta = j * thetaStep;
 
-			DirectX::XMFLOAT4 v;
+			DirectX::XMFLOAT3 v;
 
 			// spherical to cartesian
-			v.w = 1.0f;
-			v.x = radius * sinf(phi) * cosf(theta);
-			v.y = radius * cosf(phi);
-			v.z = radius * sinf(phi) * sinf(theta);
+	//		v.w = 1.0f;
+			v.x = sinf(phi) * cosf(theta);
+			v.y = cosf(phi);
+			v.z = sinf(phi) * sinf(theta);
 
 
-			vertices.push_back(v);
-			vertices.push_back(color);
+			vertices.push_back(DirectX::XMFLOAT4(v.x * radius, v.y * radius, v.z * radius, 1.0));
+			vertices.push_back(color);//color
+			vertices.push_back(DirectX::XMFLOAT4(v.x, v.y, v.z, 0.0f));
 		}
 	}
 
 	vertices.push_back(bottomVertex);
-	vertices.push_back(color);
+	vertices.push_back(color); //color
+	vertices.push_back(DirectX::XMFLOAT4(0.0f, -1.0f, 0.0f, 0.0f));
 
 	//
 	// Compute indices for top stack.  The top stack was written first to the vertex buffer
@@ -104,10 +107,10 @@ void SphereComponent::CreateSphere(float radius, int sliceCount, int stackCount)
 HRESULT SphereComponent::AllocResources()
 {
 	SetBuffers();
-	SetShaders();
-	SetMatrixes();
-	UpdateMatrixes();
-	SetInputLayout();
+	//SetShaders();
+	//SetMatrixes();
+	//UpdateMatrixes();
+	//SetInputLayout();
 
 	isResourcesAlloced = true;
 
@@ -117,17 +120,13 @@ HRESULT SphereComponent::AllocResources()
 
 void SphereComponent::Draw()
 {
-	UINT stride = sizeof(DirectX::XMFLOAT4) * 2;
+	UINT stride = sizeof(DirectX::XMFLOAT4) * 3;
 	UINT offset = 0;
 
-	app->context->IASetInputLayout(layout);
-	app->context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	
 	app->context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	app->context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
-	app->context->VSSetConstantBuffers(0, 1, &constantBuffer);
-	//app->context->PSSetConstantBuffers(0, 1, &constantBuffer);
-	app->context->VSSetShader(vertexShader, NULL, 0);
-	app->context->PSSetShader(pixelShader, NULL, 0);
+	
 
 	app->context->DrawIndexed(UINT(indices.size()), 0, 0);
 
@@ -139,18 +138,18 @@ HRESULT SphereComponent::DestroyResources()
 	{
 		if (indexBuffer) indexBuffer->Release();
 		if (vertexBuffer) vertexBuffer->Release();
-		if (constantBuffer) constantBuffer->Release();
+	//	if (constantBuffer) constantBuffer->Release();
 
-		if (layout)
-			layout->Release();
-		if (vertexShader)
-			vertexShader->Release();
-		if (vertexShaderByteCode)
-			vertexShaderByteCode->Release();
-		if (pixelShader)
-			pixelShader->Release();
-		if (pixelShaderByteCode)
-			pixelShaderByteCode->Release();
+		//if (layout)
+		//	layout->Release();
+		//if (vertexShader)
+		//	vertexShader->Release();
+		//if (vertexShaderByteCode)
+		//	vertexShaderByteCode->Release();
+		//if (pixelShader)
+		//	pixelShader->Release();
+		//if (pixelShaderByteCode)
+		//	pixelShaderByteCode->Release();
 	}
 
 	isResourcesAlloced = false;

@@ -1,7 +1,7 @@
 #pragma once
 #include "GameComponent.h"
 
-class TriangleComponent: public GameComponent
+class TriangleComponent: public RenderComponent
 {
 public:
 	//D3DApp* app;

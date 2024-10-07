@@ -2,7 +2,7 @@
 #include "GameComponent.h"
 
 
-class RectComponent : public GameComponent
+class RectComponent : public RenderComponent
 {
 public:
 	//D3DApp* app;

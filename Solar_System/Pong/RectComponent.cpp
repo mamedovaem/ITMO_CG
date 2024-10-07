@@ -5,7 +5,7 @@ HRESULT RectComponent::AllocResources()
 	SetMatrixes();
 	SetBuffers();
 	SetShaders();
-	SetInputLayout();
+	InitInputLayout();
 	isResourcesAlloced = true;
 
 	return S_OK;

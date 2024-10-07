@@ -35,7 +35,7 @@ HRESULT CircleComponent::AllocResources()
 	SetMatrixes();
 	SetBuffers();
 	SetShaders();
-	SetInputLayout();
+	InitInputLayout();
 
 	isResourcesAlloced = true;
 

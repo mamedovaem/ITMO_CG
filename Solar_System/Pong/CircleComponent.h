@@ -1,7 +1,7 @@
 #pragma once
 #include "GameComponent.h"
 
-class CircleComponent: public GameComponent
+class CircleComponent: public RenderComponent
 {
 public:
 	//D3DApp* app;
